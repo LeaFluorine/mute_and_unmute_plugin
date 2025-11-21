@@ -574,6 +574,23 @@ class MuteAndUnmutePlugin(BasePlugin):
 
         return components
 
-    # 可选：插件加载后的初始化逻辑（如果需要）
-    # async def on_plugin_loaded(self):
-    #     print(f"[MuteAndUnmutePlugin] Loaded. Managing mute status in storage key: {STORAGE_KEY_MUTED_STREAMS}")
+    async def on_plugin_loaded(self):
+        """
+        插件加载时的钩子函数。
+        清空存储中所有已保存的禁言列表，确保插件状态与程序状态一致。
+        """
+        # 获取存储实例
+        plugin_storage = storage_api.get(PLUGIN_NAME)
+
+        # 获取当前存储的禁言列表
+        current_muted_streams: Dict[str, float] = plugin_storage.get(STORAGE_KEY_MUTED_STREAMS, {})
+
+        if current_muted_streams:
+            # 如果列表不为空，则清空它
+            plugin_storage[STORAGE_KEY_MUTED_STREAMS] = {}
+            print(f"[MuteAndUnmutePlugin] 在插件加载时清空了 {len(current_muted_streams)} 条旧的禁言记录。")
+        else:
+            print(f"[MuteAndUnmutePlugin] 插件加载时，禁言列表为空，无需清空。")
+
+        # 可选：如果需要，可以在此处发送一条系统日志或通知给 Master
+        # 例如：await send_api.text_to_master("MuteAndUnmutePlugin 已加载，并清空了旧的禁言记录。")
