@@ -145,7 +145,7 @@ class UnmuteMaiCommand(PlusCommand):
         # 这里需要判断是否需要思考，根据 PlusCommand 的返回值约定，第三个 bool 表示是否需要思考
         # 通常，执行了明确的命令后，可以触发一次思考
         try:
-            replyer = generator_api.get_replyer(chat_stream=chat_stream)
+            replyer = await generator_api.get_replyer(chat_stream=chat_stream)
             if replyer:
                 success, reply_set, prompt = await generator_api.generate_reply(
                     chat_stream=chat_stream,
