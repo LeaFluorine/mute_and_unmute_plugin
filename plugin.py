@@ -396,7 +396,7 @@ class MuteControlChatter(BaseChatter):
                     # 通过 chat_api 获取 ChatManager，再获取 ChatStream
                     try:
                         from src.chat.message_receive.chat_stream import get_chat_manager # 获取 ChatManager 单例
-                        chat_manager = await get_chat_manager()
+                        chat_manager = get_chat_manager()
                         chat_stream_obj = chat_manager.get_stream(context_stream_id) # 尝试从 ChatManager 获取 ChatStream 对象
                         if chat_stream_obj:
                             # 如果能获取到 ChatStream，再尝试触发思考
@@ -504,7 +504,7 @@ class MuteControlChatter(BaseChatter):
                             # 尝试触发一次主动思考 (同样使用 ChatManager)
                             try:
                                 from src.chat.message_receive.chat_stream import get_chat_manager # 获取 ChatManager 单例
-                                chat_manager = await get_chat_manager() # <--- 加 await --->
+                                chat_manager = get_chat_manager() 
                                 chat_stream_obj = chat_manager.get_stream(stream_id) # 尝试从 ChatManager 获取 ChatStream 对象
                                 if chat_stream_obj:
                                     # 如果能获取到 ChatStream，再尝试触发思考

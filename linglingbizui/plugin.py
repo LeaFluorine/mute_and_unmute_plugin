@@ -167,7 +167,7 @@ class UnmuteMaiCommand(PlusCommand):
 
         # 尝试触发一次主动思考
         try:
-            replyer = generator_api.get_replyer(chat_stream=chat_stream)
+            replyer = await generator_api.get_replyer(chat_stream=chat_stream)
             if replyer:
                 success, reply_set, prompt = await generator_api.generate_reply(
                     chat_stream=chat_stream,
@@ -390,7 +390,7 @@ class AtUnmuteHandler(Handler):
 
                     # 尝试触发一次主动思考
                     try:
-                        replyer = generator_api.get_replyer(chat_stream=message.chat_stream)
+                        replyer = await generator_api.get_replyer(chat_stream=message.chat_stream)
                         if replyer:
                             success, reply_set, prompt = await generator_api.generate_reply(
                                 chat_stream=message.chat_stream,
